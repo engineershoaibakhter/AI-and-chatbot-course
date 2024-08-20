@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <section className='flex justify-between items-center p-8'>
+    <section className='flex justify-evenly items-center p-8'>
       <div className='block'>
         <div className='flex justify-center'>
 
@@ -16,8 +16,9 @@ const Header = () => {
       </div>
       <div className='text-left'>
         <h3 className='font-semibold text-xl'>Web Developer</h3>
-        <p className='text-gray-600 mt-2'>
-          [I am a MERN Stack Developer.]
+        <p className='text-gray-600 mt-2 w-[30rem]'>
+          I am a MERN Stack Developer. I work HTML, CSS, JavaScript,
+          React, Next JS, Express JS, Node JS, Mongodb and React Native with Firebase
         </p>
       </div>
     </section>
