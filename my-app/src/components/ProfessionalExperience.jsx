@@ -9,8 +9,8 @@ const ProfessionalExperience = () => {
         <p>Software Engineer</p>
         <p>Date & Duration</p>
         <ul className='list-disc list-inside'>
-          <li>[Description of your responsibilities]</li>
-          <li>[Achievements]</li>
+          <li>Build Web Application</li>
+          <li>Become Full Stack Engineer</li>
         </ul>
       </div>
       <div>
@@ -18,8 +18,8 @@ const ProfessionalExperience = () => {
         <p>Software Engineer</p>
         <p>Date & Duration</p>
         <ul className='list-disc list-inside'>
-          <li>[Description of your responsibilities]</li>
-          <li>[Achievements]</li>
+        <li>Build Web Application</li>
+        <li>Become Full Stack Engineer</li>
         </ul>
       </div>
     </section>
