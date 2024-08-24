@@ -2,7 +2,7 @@ import React from 'react';
 
 const EducationAndSkills = () => {
   return (
-    <section className='grid grid-cols-2 gap-8 p-8'>
+    <section className='grid sm:grid-cols-2 gap-8 p-8'>
       <div>
         <h3 className='text-2xl font-bold mb-4'>Education</h3>
         <p>2021 - 2025</p>

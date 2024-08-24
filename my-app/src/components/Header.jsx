@@ -16,7 +16,7 @@ const Header = () => {
       </div>
       <div className='text-left'>
         <h3 className='font-semibold text-xl'>Web Developer</h3>
-        <p className='text-gray-600 mt-2 w-[30rem]'>
+        <p className='text-gray-600 mt-2 sm:w-[30rem] w-auto'>
           I am a MERN Stack Developer. I work HTML, CSS, JavaScript,
           React, Next JS, Express JS, Node JS, Mongodb and React Native with Firebase
         </p>

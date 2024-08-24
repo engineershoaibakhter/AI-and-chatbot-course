@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProfessionalExperience = () => {
   return (
-    <section className='p-8 grid grid-cols-2 gap-8 p-8'>
+    <section className='grid  sm:grid-cols-2 gap-8 p-8'>
       <div>
       <h3 className='text-2xl font-bold mb-4'>Professional Experience</h3>
       <div className='mb-6'>
