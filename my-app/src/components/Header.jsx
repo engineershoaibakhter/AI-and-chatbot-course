@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <section className='flex justify-evenly items-center p-8'>
+    <section className='flex justify-evenly items-center flex-wrap gap-5 p-8'>
       <div className='block'>
         <div className='flex justify-center'>
 
