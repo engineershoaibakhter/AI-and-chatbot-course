@@ -4,7 +4,7 @@ const ProfessionalExperience = () => {
   return (
     <section className='grid  sm:grid-cols-2 gap-8 p-8'>
       <div>
-      <h3 className='text-2xl font-bold mb-4'>Professional Experience</h3>
+      <h3 className='sm:text-2xl font-bold mb-4 text-xl'>Professional Experience</h3>
       <div className='mb-6'>
         <h4 className='font-semibold'>Onde Digital</h4>
         <p>Software Engineer</p>
@@ -26,7 +26,7 @@ const ProfessionalExperience = () => {
       </div>
 
       <div>
-      <h3 className='text-2xl font-bold mb-4'>Professional Experience</h3>
+      <h3 className='sm:text-2xl font-bold mb-4 text-xl'>Professional Experience</h3>
       <div className='mb-6'>
         <h4 className='font-semibold'>Onde Digital</h4>
         <p>Software Engineer</p>
