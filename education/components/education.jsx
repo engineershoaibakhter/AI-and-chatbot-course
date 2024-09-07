@@ -102,7 +102,7 @@ const Education = ({ classId }) => {
           </ul>
         ))
       ) : (
-        <p className="text-center text-base text-yellow-600">This class has no data!</p>
+        <p className="text-center text-base text-green-400">This class has no data!</p>
       )}
     </div>
   );
