@@ -55,7 +55,7 @@ const InputForm = () => {
       toast.error("Please write your link");
       return;
     }
-
+  
     dispatch(
       addProjectLink({
         uid: classId,
@@ -63,14 +63,19 @@ const InputForm = () => {
       })
     )
       .unwrap()
-      .then(() => {
+      .then(async () => {
         toast.success("Link added");
         setTodo("");
+  
+        // Fetch the updated list of links and set the state in the Education component
+        const updatedLinks = await dispatch(fetchProjectLink(classId)).unwrap();
+        setPreviousProjectLinks(updatedLinks);  // Optional: If you're managing links locally in InputForm component
       })
       .catch((err) => {
         toast.error("Error adding link");
       });
   };
+  
 
   return (
     <>
@@ -86,7 +91,7 @@ const InputForm = () => {
           />
           <button
             type="submit"
-            className="h-full flex justify-center items-center border-[1px] text-center bg-green-400 text-black px-2 rounded-md uppercase"
+            className="h-full flex justify-center items-center border-[1px] text-center bg-green-400 text-black px-4 rounded-md uppercase"
           >
             <FaArrowRight />
           </button>
@@ -111,7 +116,7 @@ const InputForm = () => {
               </div>
               <button
                 type="submit"
-                className="h-full flex justify-center items-center border-[1px] bg-green-400 text-black px-2 rounded-md"
+                className="h-full flex justify-center items-center border-[1px] bg-green-400 text-black px-4 rounded-md"
               >
                 <IoIosAddCircle className="text-xl" />
               </button>
