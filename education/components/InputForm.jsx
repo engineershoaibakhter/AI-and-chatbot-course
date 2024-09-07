@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import TodoList from "./TodoList";
+import Education from "./Education";
 
 const InputForm = () => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const InputForm = () => {
           Add todo
         </button>
       </form>
-      <TodoList />
+      <Education />
       {/* TodoList */}
     </div>
     </>
