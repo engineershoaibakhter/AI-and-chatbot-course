@@ -22,9 +22,9 @@ const Education = ({ classId }) => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-       const response=await dispatch(fetchProjectLink(classId)).unwrap();
-       setGetData(response) 
-       console.log(response);
+        const response = await dispatch(fetchProjectLink(classId)).unwrap();
+        setGetData(response);
+        console.log(response);
       } catch (err) {
         toast.error("Error fetching links");
       } finally {
@@ -40,34 +40,38 @@ const Education = ({ classId }) => {
     setEditingLinkId(linkId);
   };
 
-  const handleUpdateLink = () => {
+  const handleUpdateLink = async () => {
     if (currentLink === "") {
       toast.error("Link cannot be empty");
       return;
     }
 
-    dispatch(updateProjectLink({ uid: editingLinkId, link: currentLink }))
-      .unwrap()
-      .then(() => {
-        toast.success("Link updated");
-        setEditMode(false);
-        setCurrentLink("");
-        setEditingLinkId("");
-      })
-      .catch(() => {
-        toast.error("Error updating link");
-      });
+    try {
+      await dispatch(updateProjectLink({ uid: classId, linkId: editingLinkId, newLink: currentLink })).unwrap();
+      toast.success("Link updated");
+      setEditMode(false);
+      setCurrentLink("");
+      setEditingLinkId("");
+
+      // Fetch updated links after updating
+      const updatedLinks = await dispatch(fetchProjectLink(classId)).unwrap();
+      setGetData(updatedLinks);
+    } catch (error) {
+      toast.error("Error updating link");
+    }
   };
 
-  const handleDeleteLink = (linkId) => {
-    dispatch(removeTodo(linkId))
-      .unwrap()
-      .then(() => {
-        toast.success("Link deleted successfully");
-      })
-      .catch(() => {
-        toast.error("Error deleting link");
-      });
+  const handleDeleteLink = async (linkId) => {
+    try {
+      await dispatch(removeTodo(linkId)).unwrap();
+      toast.success("Link deleted successfully");
+
+      // Fetch updated links after deleting
+      const updatedLinks = await dispatch(fetchProjectLink(classId)).unwrap();
+      setGetData(updatedLinks);
+    } catch (error) {
+      toast.error("Error deleting link");
+    }
   };
 
   if (loading) {
@@ -76,7 +80,6 @@ const Education = ({ classId }) => {
 
   return (
     <div className="flex flex-col gap-4 mt-2 p-4 border border-gray-600 rounded-md">
-      
       {addLink?.length > 0 ? (
         <ul className="border border-slate-500 p-2 shadow-lg flex flex-col gap-2 overflow-y-auto">
           {addLink.map((item) => (

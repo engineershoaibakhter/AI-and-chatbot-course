@@ -75,15 +75,30 @@ export const addClass = createAsyncThunk('education/addClass', async ({ uid, add
 
 
 // Update project link
-export const updateProjectLink = createAsyncThunk('education/updateProjectLink', async ({ uid, link }, { rejectWithValue }) => {
-  try {
-    const projectDocRef = doc(db, 'projectLink', uid);
-    await updateDoc(projectDocRef, { link });
-    return link;
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
-});
+// Update project link
+export const updateProjectLink = createAsyncThunk('education/updateProjectLink', async ({ uid, linkId, newLink }, { rejectWithValue }) => {
+    try {
+      const projectDocRef = doc(db, 'projectLink', uid);
+      const projectDoc = await getDoc(projectDocRef);
+  
+      if (projectDoc.exists()) {
+        const existingLinks = projectDoc.data().links || [];
+        const index = existingLinks.findIndex(link => link.linkId === linkId);
+  
+        if (index !== -1) {
+          existingLinks[index] = { ...existingLinks[index], link: newLink }; // Update the link
+          await setDoc(projectDocRef, { links: existingLinks }, { merge: true }); // Merge the new links array
+        }
+      } else {
+        throw new Error('Document does not exist');
+      }
+  
+      return newLink; // Return the updated link
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  });
+  
 
 // Remove project link
 export const removeTodo = createAsyncThunk('education/removeTodo', async (linkId, { rejectWithValue }) => {
