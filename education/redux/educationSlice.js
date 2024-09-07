@@ -101,15 +101,34 @@ export const updateProjectLink = createAsyncThunk('education/updateProjectLink',
   
 
 // Remove project link
-export const removeTodo = createAsyncThunk('education/removeTodo', async (linkId, { rejectWithValue }) => {
-  try {
-    const projectDocRef = doc(db, 'projectLink', linkId);
-    await deleteDoc(projectDocRef);
-    return linkId;
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
-});
+export const removeTodo = createAsyncThunk('education/removeTodo', async ({ uid, linkId }, { rejectWithValue }) => {
+    try {
+      const projectDocRef = doc(db, 'projectLink', uid);
+      const projectDoc = await getDoc(projectDocRef);
+      
+      if (!projectDoc.exists()) {
+        throw new Error('Document does not exist');
+      }
+  
+      const existingLinks = projectDoc.data().links || [];
+      
+      if (!Array.isArray(existingLinks)) {
+        throw new Error('Links is not an array');
+      }
+  
+      const updatedLinks = existingLinks.filter(link => link.linkId !== linkId);
+  
+      await updateDoc(projectDocRef, { links: updatedLinks });
+      
+      return linkId;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  });
+  
+  
+  
+  
 
 // Automatically delete documents after 24 hours
 export const deleteOldDocs = createAsyncThunk('education/deleteOldDocs', async (_, { rejectWithValue }) => {

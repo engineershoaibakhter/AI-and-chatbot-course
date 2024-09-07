@@ -63,16 +63,19 @@ const Education = ({ classId }) => {
 
   const handleDeleteLink = async (linkId) => {
     try {
-      await dispatch(removeTodo(linkId)).unwrap();
+      // Pass both uid and linkId to removeTodo
+      await dispatch(removeTodo({ uid: classId, linkId })).unwrap();
       toast.success("Link deleted successfully");
-
+  
       // Fetch updated links after deleting
       const updatedLinks = await dispatch(fetchProjectLink(classId)).unwrap();
       setGetData(updatedLinks);
     } catch (error) {
       toast.error("Error deleting link");
+      console.error("Error deleting link:", error); // Add console log to debug the error
     }
   };
+  
 
   if (loading) {
     return <p className="text-center text-base text-yellow-600">Loading...</p>; // Loading message
