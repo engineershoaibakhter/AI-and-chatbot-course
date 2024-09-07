@@ -1,4 +1,65 @@
-const { createSlice } = require("@reduxjs/toolkit");
+const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+
+export const addProjectLink=createAsyncThunk('education/addProjectLink',async ({uid,addData},{rejectWithValue})=>{
+    try {
+        const projectDocRef=doc(db,'projectLink',uid);
+        await setDoc(projectDocRef,addData);
+        return addData;
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+})
+
+export const updateProjectLink = createAsyncThunk('education/updateProjectLink', async ({ uid, ...updateData }, { rejectWithValue }) => {
+    try {
+        const projectDocRef = doc(db, 'projectLink', uid);
+        await updateDoc(projectDocRef, updateData); // Update the existing document
+        return updateData; // Return the updated data
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+});
+
+export const fetchProjectLink = createAsyncThunk('education/fetchProjectLink', async (uid, { rejectWithValue }) => {
+    try {
+        const projectDocRef = doc(db, 'projectLink', uid);
+        const projectDoc = await getDoc(projectDocRef);
+        if (projectDoc.exists()) {
+            return projectDoc.data(); // Return project data
+        } else {
+            throw new Error("Project Not Found");
+        }
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+});
+
+
+// Class ID Function
+export const addClass=createAsyncThunk('education/addClass',async ({uid,addData},{rejectWithValue})=>{
+    try {
+        const projectDocRef=doc(db,'classLink',uid);
+        await setDoc(projectDocRef,addData);
+        return addData;
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+})
+
+export const fetchClass = createAsyncThunk('education/fetchClass', async (uid, { rejectWithValue }) => {
+    try {
+        const projectDocRef = doc(db, 'classLink', uid);
+        const projectDoc = await getDoc(projectDocRef);
+        if (projectDoc.exists()) {
+            return projectDoc.data(); // Return project data
+        } else {
+            throw new Error("Project Not Found");
+        }
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+});
+
 
 const initialState={
     classId:null,

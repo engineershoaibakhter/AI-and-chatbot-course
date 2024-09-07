@@ -1,10 +1,11 @@
 "use client";
-import { addTodo } from "@/redux/todoSlice";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import Education from "./Education";
+import { FaArrowRight } from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
 
 const InputForm = () => {
   const dispatch = useDispatch();
@@ -29,10 +30,29 @@ const InputForm = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center">Todo Application with</h1>
-      <h1 className="text-3xl font-bold text-center"><span className="text-green-400">Next JS</span>, <span className="text-red-600">Redux Toolkit</span> & <span className="text-yellow-600">Tailwind CSS</span></h1>
+    <div className="flex justify-between mb-10">
+      <h1 className="text-3xl font-bold text-center text-green-400">Education Portal</h1>
+      <h1 className="text-3xl font-bold text-center">
+        
+        <form className="flex items-center gap-4 h-10 md:h-12 relative">
+          <input
+          className="w-full h-full border-[1px] border-gray-600
+          bg-transparent pl-4 pr-10 md:pr-12 placeholder:text-gray-400 text-base md:text-sm tracking-wide
+          rounded-md outline-none hover:border-green-500
+          focus-visible:border-gray-500 duration-200"
+          type="text" id="classId" name="classId" placeholder="Enter Class ID" />
+          <button
+          type="submit"
+          className="h-full flex justify-center items-center border-[1px] min-w-12 text-center bg-green-400 text-black border-gray-600 px-2 rounded-md uppercase duration-200 text-sm md:text-base"
+        >
+          <FaArrowRight />
+        </button>
+        </form>
+      </h1>
+    </div>
     <div>
       {/* Todo Form */}
+      <h1 className="text-4xl font-bold text-center mb-10">Class ID: <span className="text-green-400">{}1253</span></h1>
       <form
         onSubmit={handleTodo}
         className="flex items-center gap-4 h-10 md:h-12 relative"
@@ -56,10 +76,10 @@ const InputForm = () => {
         </div>
         <button
           type="submit"
-          className="h-full border-[1px] border-gray-600 px-2 rounded-md 
-          hover:text-orange-600 uppercase duration-200 text-sm md:text-base"
+          className="h-full flex justify-center items-center min-w-12 border-[1px] border-gray-600 px-2 rounded-md 
+    bg-green-400 text-black font-bold uppercase duration-200 text-sm md:text-base"
         >
-          Add todo
+           <IoIosAddCircle className=" text-xl" />
         </button>
       </form>
       <Education />

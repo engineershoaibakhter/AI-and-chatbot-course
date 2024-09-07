@@ -1,5 +1,4 @@
-import { deleteTodo, removeTodo } from "@/redux/todoSlice";
-import { State } from "@/type";
+import { addProjectLink, updateProjectLink, fetchProjectLink } from "@/redux/educationSlice";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
@@ -9,31 +8,31 @@ const Education = () => {
   const dispatch = useDispatch();
   const [showRemove, setShowRemove] = useState(false);
 
-  const { todoList } = useSelector((state) => state?.todo);
+  // const { todoList } = useSelector((state) => state?.todo);
   return (
     <div className="flex flex-col gap-4 mt-2 p-4 border border-gray-600 rounded-md">
-      {todoList?.length > 0 && (
+      {/* {todoList?.length > 0 && ( */}
         <>
           <ul
             className="max-h-[300px] border border-slate-500 p-2 shadow-lg
             shadow-gray-800 flex flex-col gap-2 overflow-y-auto"
           >
-            {todoList?.map((item) => (
+            {/* {todoList?.map((item) => ( */}
               <li
                 className="border-l-green-500 border-green-900 w-full font-medium
                 border-[1px] border-l-[6px] px-2 py-1 cursor-pointer flex items-center justify-between"
-                key={item?._id}
+                // key={item?._id}
               >
-                {item?.todo}
+                {/* {item?.todo} */}
                 <MdDelete
                   onClick={() => {
-                    dispatch(deleteTodo(item?._id));
+                    // dispatch(deleteTodo(item?._id));
                     toast.success("Todo Deleted Successfully!");
                   }}
                   className="text-lg hover:text-red-500 duration-200"
                 />
               </li>
-            ))}
+            {/* ))} */}
           </ul>
           <button
             onClick={() => setShowRemove(true)}
@@ -43,12 +42,12 @@ const Education = () => {
             Remove Todo
           </button>
         </>
-      )}
-      {todoList?.length === 0 && (
+      {/* )} */}
+      {/* {todoList?.length === 0 && ( */}
         <p className="text-center text-base text-yellow-600 font-medium tracking-wide">
           Your Todo list is Empty!
         </p>
-      )}
+      {/* )} */}
       {showRemove && (
         <div className="fixed inset-0 flex items-center justify-center bg-bodyColor bg-opacity-60 z-50">
           <div className="relative p-8 bg-black shadow-todoShadow rounded-md max-w-sm w-full mx-4">
