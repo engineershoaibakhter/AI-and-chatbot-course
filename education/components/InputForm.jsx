@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,36 +12,41 @@ import {
   addProjectLink,
   selectClassId,
   selectAddLinkData,
+  fetchProjectLink
 } from "@/redux/educationSlice";
 
 const InputForm = () => {
   const dispatch = useDispatch();
   const [todo, setTodo] = useState("");
   const [classIdInput, setClassIdInput] = useState("");
+  const [previousProjectLinks, setPreviousProjectLinks] = useState([]);
   const classId = useSelector(selectClassId);
   const addLink = useSelector(selectAddLinkData);
 
-  const handleClassIdSubmit = (e) => {
+  const handleClassIdSubmit = async(e) => {
     e.preventDefault();
     if (classIdInput === "") {
       toast.error("Please enter a Class ID");
       return;
     }
 
-    // Fetch or add Class ID in Firebase Firestore
-    dispatch(fetchClass(classIdInput))
-      .unwrap()
-      .then((response) => {
-        if (!response) {
-          dispatch(addClass({ uid: classIdInput, addData: { classId: classIdInput } }));
-          toast.success(`New Class ID ${classIdInput} added!`);
-        } else {
-          toast.success(`Class ID ${classIdInput} found!`);
-        }
-      })
-      .catch((err) => {
-        toast.error("Error fetching Class ID");
-      });
+    try {
+      const response = await dispatch(addClass({ uid: classIdInput, addData: { classId: classIdInput } }) ).unwrap();
+  
+      // If the class exists, display it
+      if (response) {
+        await dispatch(fetchClass(classIdInput)).unwrap();
+        const links = await dispatch(fetchProjectLink(classIdInput)).unwrap(); // Fetch previous project links
+        setPreviousProjectLinks(links); // Store them in state
+        console.log(links);
+        toast.success(`New Class ID ${classIdInput} added!`);
+      } else {
+        // If class doesn't exist, add it and then display it
+        
+      }
+    } catch (err) {
+      toast.error("Error fetching or adding Class ID");
+    }
   };
 
   const handleTodoSubmit = (e) => {
@@ -113,7 +118,7 @@ const InputForm = () => {
             </form>
           </>
         )}
-        {classId && <Education />}
+        {classId && <Education classId={classId}/>}
       </div>
     </>
   );

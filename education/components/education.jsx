@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
@@ -9,12 +10,29 @@ import {
   selectAddLinkData,
 } from "@/redux/educationSlice";
 
-const Education = () => {
+const Education = ({ classId }) => {
   const dispatch = useDispatch();
   const addLink = useSelector(selectAddLinkData);
+  const [getData, setGetData] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentLink, setCurrentLink] = useState("");
   const [editingLinkId, setEditingLinkId] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+       const response=await dispatch(fetchProjectLink(classId)).unwrap();
+       setGetData(response) 
+       console.log(response);
+      } catch (err) {
+        toast.error("Error fetching links");
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+    fetchLinks();
+  }, [dispatch, classId]);
 
   const handleEditLink = (linkId, link) => {
     setEditMode(true);
@@ -36,7 +54,7 @@ const Education = () => {
         setCurrentLink("");
         setEditingLinkId("");
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Error updating link");
       });
   };
@@ -47,16 +65,21 @@ const Education = () => {
       .then(() => {
         toast.success("Link deleted successfully");
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Error deleting link");
       });
   };
 
+  if (loading) {
+    return <p className="text-center text-base text-yellow-600">Loading...</p>; // Loading message
+  }
+
   return (
     <div className="flex flex-col gap-4 mt-2 p-4 border border-gray-600 rounded-md">
+      
       {addLink?.length > 0 ? (
         <ul className="border border-slate-500 p-2 shadow-lg flex flex-col gap-2 overflow-y-auto">
-          {addLink?.map((item) => (
+          {addLink.map((item) => (
             <li key={item?.linkId} className="border-l-green-500 border-green-900 w-full flex items-center justify-between">
               <span>{item?.link}</span>
               <div className="flex items-center gap-2">
@@ -67,7 +90,7 @@ const Education = () => {
           ))}
         </ul>
       ) : (
-        <p className="text-center text-base text-yellow-600">Your Todo list is empty!</p>
+        <p className="text-center text-base text-yellow-600">This class has no data!</p>
       )}
       {editMode && (
         <div className="flex flex-col gap-2">
