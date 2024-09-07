@@ -5,7 +5,7 @@ import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { FaArrowRight } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
-import Education from "./Education";
+import Education from "./education";
 import {
   addClass,
   fetchClass,
