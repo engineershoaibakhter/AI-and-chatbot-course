@@ -79,8 +79,8 @@ const InputForm = () => {
 
   return (
     <>
-      <div className="flex justify-between mb-10">
-        <h1 className="text-3xl font-bold text-center text-green-400">Education Portal</h1>
+      <div className="sm:flex sm:justify-between mb-10">
+        <h1 className="text-3xl font-bold text-center text-green-400 sm:mb-0 mb-10">Education Portal</h1>
         <form onSubmit={handleClassIdSubmit} className="flex items-center gap-4 h-10 md:h-12 relative">
           <input
             className="w-full h-full border-[1px] border-gray-600 bg-transparent pl-4 pr-10 placeholder:text-gray-400 text-base rounded-md outline-none"
