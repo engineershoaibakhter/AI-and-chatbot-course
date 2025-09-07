@@ -53,10 +53,11 @@
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links li {
-            margin-left: 2rem;
+            margin-left: 1.5rem;
         }
 
         .nav-links a {
@@ -68,6 +69,46 @@
 
         .nav-links a:hover {
             color: #3498db;
+        }
+
+        .search-nav {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .search-nav input {
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            width: 150px;
+        }
+
+        .search-nav button {
+            padding: 8px 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-nav button:hover {
+            background: #2980b9;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-section.active {
+            display: block;
         }
 
         /* Hero Section */
@@ -125,7 +166,6 @@
             background: #3498db;
             color: white;
             border: none;
-            border-radius: 0 5px 5px 0;
             cursor: pointer;
             font-weight: bold;
             transition: background 0.3s;
@@ -133,6 +173,19 @@
 
         .search-box button:hover {
             background: #2980b9;
+        }
+
+        .search-btn {
+            border-radius: 0;
+        }
+
+        .clear-btn {
+            border-radius: 0 5px 5px 0;
+            background: #e74c3c;
+        }
+
+        .clear-btn:hover {
+            background: #c0392b;
         }
 
         /* Destinations Section */
@@ -286,6 +339,90 @@
             background: #2980b9;
         }
 
+        /* Team Section */
+        .team-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .team-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-info {
+            padding: 1.5rem;
+        }
+
+        .team-info h3 {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .team-info p {
+            color: #7f8c8d;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
         /* Footer */
         footer {
             background: #1a252f;
@@ -297,7 +434,31 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #2c3e50;
+                padding: 1rem;
                 display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .search-nav {
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .search-nav input {
+                width: 100%;
             }
 
             .hero h1 {
@@ -315,6 +476,27 @@
 
             .search-box button {
                 border-radius: 5px;
+                margin-bottom: 5px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
             }
         }
     </style>
@@ -327,58 +509,196 @@
                 <i class="fas fa-plane-departure"></i>
                 <span>TravelBloom</span>
             </div>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
             <ul class="nav-links">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
+                <li>
+                    <div class="search-nav">
+                        <input type="text" id="nav-search-input" placeholder="Search...">
+                        <button id="nav-search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </li>
+                <li><button id="nav-clear-btn" class="btn">Clear</button></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Discover Your Dream Destination</h1>
-            <p>Explore the world with our expertly curated travel recommendations and personalized experiences</p>
-            <a href="#" class="btn">Book Now</a>
-        </div>
-    </section>
+    <!-- Home Page -->
+    <div id="home-page" class="page-section active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Your Dream Destination</h1>
+                <p>Explore the world with our expertly curated travel recommendations and personalized experiences</p>
+                <a href="#" class="btn">Book Now</a>
+            </div>
+        </section>
 
-    <!-- Search Section -->
-    <div class="search-container">
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Enter destination or keyword...">
-            <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+        <!-- Search Section -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Enter destination or keyword...">
+                <button id="search-btn" class="search-btn"><i class="fas fa-search"></i> Search</button>
+                <button id="clear-btn" class="clear-btn"><i class="fas fa-times"></i> Clear</button>
+            </div>
         </div>
+
+        <!-- Destinations Section -->
+        <section class="destinations">
+            <div class="section-title">
+                <h2>Popular Destinations</h2>
+                <p>Explore our most sought-after travel destinations around the world</p>
+            </div>
+            <div class="destinations-grid" id="destinations-container">
+                <!-- Destination cards will be dynamically generated here -->
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About TravelBloom</h2>
+                    <p>TravelBloom is a premier travel recommendation platform dedicated to helping travelers discover their perfect destinations. Our mission is to inspire and enable people to explore the world through personalized travel experiences.</p>
+                    <p>We believe that travel has the power to broaden horizons, create lasting memories, and bring people together across cultures.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- Destinations Section -->
-    <section class="destinations">
+    <!-- About Us Page -->
+    <div id="about-page" class="page-section">
         <div class="section-title">
-            <h2>Popular Destinations</h2>
-            <p>Explore our most sought-after travel destinations around the world</p>
+            <h2>About Us</h2>
+            <p>Get to know the team behind TravelBloom</p>
         </div>
-        <div class="destinations-grid" id="destinations-container">
-            <!-- Destination cards will be dynamically generated here -->
-        </div>
-    </section>
 
-    <!-- About Section -->
-    <section class="about">
         <div class="about-content">
             <div class="about-text">
-                <h2>About TravelBloom</h2>
-                <p>TravelBloom is a premier travel recommendation platform dedicated to helping travelers discover their perfect destinations. Our mission is to inspire and enable people to explore the world through personalized travel experiences.</p>
-                <p>We believe that travel has the power to broaden horizons, create lasting memories, and bring people together across cultures.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                <h2>Our Story</h2>
+                <p>TravelBloom was founded in 2015 by a group of passionate travelers who wanted to make it easier for people to discover amazing destinations around the world. What started as a small blog has grown into a comprehensive travel platform serving millions of users every month.</p>
+                <p>Our mission is to inspire and enable people to explore the world through personalized travel experiences. We believe that travel has the power to broaden horizons, create lasting memories, and bring people together across cultures.</p>
+                
+                <h2>Our Values</h2>
+                <p>At TravelBloom, we're committed to:</p>
+                <ul>
+                    <li>Providing authentic, reliable travel information</li>
+                    <li>Promoting sustainable and responsible tourism</li>
+                    <li>Helping travelers discover hidden gems beyond tourist traps</li>
+                    <li>Creating a community of passionate travelers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="section-title">
+                <h2>Meet Our Team</h2>
+                <p>The passionate people behind TravelBloom</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-img">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sarah Johnson">
+                    </div>
+                    <div class="team-info">
+                        <h3>Sarah Johnson</h3>
+                        <p>CEO & Founder</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="team-img">
+                        <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Michael Chen">
+                    </div>
+                    <div class="team-info">
+                        <h3>Michael Chen</h3>
+                        <p>Head of Travel Research</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="team-img">
+                        <img src="https://images.unsplash.com/photo-1590086782792-42dd2350140d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Emma Rodriguez">
+                    </div>
+                    <div class="team-info">
+                        <h3>Emma Rodriguez</h3>
+                        <p>Content Director</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="team-img">
+                        <img src="https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="David Kim">
+                    </div>
+                    <div class="team-info">
+                        <h3>David Kim</h3>
+                        <p>Technology Lead</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Us Page -->
+    <div id="contact-page" class="page-section">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you</p>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="How can we help you?"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Send Message</button>
+            </div>
+        </div>
+
+        <div class="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Get in Touch</h2>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, Wanderlust City, 10001</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@travelbloom.com</p>
+                    
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -393,42 +713,64 @@
                 name: "Santorini, Greece",
                 image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 description: "Experience the stunning white-washed buildings and breathtaking sunsets in this iconic Greek island paradise.",
-                price: "$1,299"
+                price: "$1,299",
+                type: "beach"
             },
             {
                 id: 2,
                 name: "Kyoto, Japan",
                 image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 description: "Discover ancient temples, traditional gardens, and rich cultural heritage in Japan's former capital.",
-                price: "$1,599"
+                price: "$1,599",
+                type: "temple"
             },
             {
                 id: 3,
                 name: "Bali, Indonesia",
                 image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 description: "Relax on pristine beaches, explore lush rice terraces, and immerse yourself in Balinese culture.",
-                price: "$899"
+                price: "$899",
+                type: "beach"
             },
             {
                 id: 4,
-                name: "Paris, France",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRpFM_5ipn7YmOp-Tef6n-_GuQ0Ea0Iz7wvQ&s",
-                description: "Fall in love with the City of Lights, from the Eiffel Tower to world-class museums and cuisine.",
-                price: "$1,199"
+                name: "Angkor Wat, Cambodia",
+                image: "https://images.unsplash.com/photo-1584950120778-4d6cce5add77?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Explore the largest religious monument in the world, a magnificent temple complex.",
+                price: "$1,199",
+                type: "temple"
             },
             {
                 id: 5,
-                name: "New York City, USA",
-                image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                description: "Experience the energy of the Big Apple with its iconic skyline, Broadway shows, and diverse neighborhoods.",
-                price: "$1,099"
+                name: "Maldives",
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Experience the ultimate beach getaway with crystal clear waters and overwater bungalows.",
+                price: "$2,499",
+                type: "beach"
             },
             {
                 id: 6,
                 name: "Machu Picchu, Peru",
                 image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 description: "Trek to the ancient Incan citadel nestled high in the Andes Mountains for a truly unforgettable adventure.",
-                price: "$1,499"
+                price: "$1,499",
+                type: "temple"
+            },
+            {
+                id: 7,
+                name: "Bora Bora, French Polynesia",
+                image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Relax on stunning white sand beaches surrounded by turquoise lagoons.",
+                price: "$3,199",
+                type: "beach"
+            },
+            {
+                id: 8,
+                name: "Golden Temple, India",
+                image: "https://images.unsplash.com/photo-1589330273594-69f1447caf0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Visit the holiest Gurdwara of Sikhism, known for its stunning golden architecture.",
+                price: "$1,099",
+                type: "temple"
             }
         ];
 
@@ -436,6 +778,11 @@
         function displayDestinations(destinationsArray) {
             const container = document.getElementById('destinations-container');
             container.innerHTML = '';
+            
+            if (destinationsArray.length === 0) {
+                container.innerHTML = '<p class="no-results">No destinations found. Try a different search term.</p>';
+                return;
+            }
             
             destinationsArray.forEach(destination => {
                 const card = document.createElement('div');
@@ -457,27 +804,105 @@
 
         // Function to filter destinations based on search
         function filterDestinations(query) {
-            const filtered = destinations.filter(destination => {
-                return destination.name.toLowerCase().includes(query.toLowerCase()) || 
-                       destination.description.toLowerCase().includes(query.toLowerCase());
+            if (!query) {
+                return destinations;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            
+            // Special handling for beach and temple searches
+            if (lowerQuery.includes('beach')) {
+                return destinations.filter(destination => destination.type === 'beach');
+            }
+            
+            if (lowerQuery.includes('temple')) {
+                return destinations.filter(destination => destination.type === 'temple');
+            }
+            
+            // General search
+            return destinations.filter(destination => {
+                return destination.name.toLowerCase().includes(lowerQuery) || 
+                       destination.description.toLowerCase().includes(lowerQuery);
             });
+        }
+
+        // Function to handle search
+        function handleSearch() {
+            const query = document.getElementById('search-input').value;
+            const filtered = filterDestinations(query);
             displayDestinations(filtered);
+        }
+
+        // Function to clear search
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('nav-search-input').value = '';
+            displayDestinations(destinations);
+        }
+
+        // Function to switch between pages
+        function switchPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.querySelector(`.nav-link[data-page="${pageId.split('-')[0]}"]`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
 
         // Initial display of all destinations
         displayDestinations(destinations);
 
-        // Search functionality
-        document.getElementById('search-btn').addEventListener('click', () => {
-            const query = document.getElementById('search-input').value;
-            filterDestinations(query);
+        // Event listeners for search functionality
+        document.getElementById('search-btn').addEventListener('click', handleSearch);
+        document.getElementById('nav-search-btn').addEventListener('click', () => {
+            const query = document.getElementById('nav-search-input').value;
+            document.getElementById('search-input').value = query;
+            handleSearch();
+            switchPage('home-page');
         });
+
+        document.getElementById('clear-btn').addEventListener('click', clearSearch);
+        document.getElementById('nav-clear-btn').addEventListener('click', clearSearch);
 
         document.getElementById('search-input').addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
-                const query = document.getElementById('search-input').value;
-                filterDestinations(query);
+                handleSearch();
             }
+        });
+
+        document.getElementById('nav-search-input').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                const query = document.getElementById('nav-search-input').value;
+                document.getElementById('search-input').value = query;
+                handleSearch();
+                switchPage('home-page');
+            }
+        });
+
+        // Event listeners for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                switchPage(`${page}-page`);
+            });
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
 
         // Simple animation for the hero section
